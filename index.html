@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistente-RPG</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Open+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>RPG Campaign Manager</h1>
+        <nav>
+            <ul>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#campanhas">Campanhas</a></li>
+                <li><a href="#personagens">Personagens</a></li>
+                <li><a href="#sessoes">Sessões</a></li>
+                <li><a href="#config">Configurações</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="dashboard" class="active">
+            <h2>Dashboard</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Campanhas Ativas</h3>
+                    <p id="active-campaigns">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Próxima Sessão</h3>
+                    <p id="next-session">Nenhuma agendada</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Personagens</h3>
+                    <p id="total-characters">0</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="campanhas">
+            <h2>Minhas Campanhas</h2>
+            <button id="new-campaign-btn" class="btn-primary">Nova Campanha</button>
+            <div id="campaigns-list" class="grid-container"></div>
+            
+            <div id="campaign-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h3 id="modal-title">Nova Campanha</h3>
+                    <form id="campaign-form">
+                        <input type="hidden" id="campaign-id">
+                        <div class="form-group">
+                            <label for="campaign-name"></label>
+                            <input type="text" id="campaign-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="campaign-system">Sistema</label>
+                            <input type="text" id="campaign-system" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="campaign-desc">Descrição</label>
+                            <textarea id="campaign-desc" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="personagens">
+            <h2>Personagens</h2>
+            <button id="new-character-btn" class="btn-primary">Novo Personagem</button>
+            <div id="characters-list" class="grid-container"></div>
+
+            <div id="character-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('character-modal')">&times;</span>
+                    <h3 id="character-modal-title">Novo Personagem</h3>
+                    <form id="character-form">
+                        <input type="hidden" id="character-id">
+                        <div class="form-group">
+                            <label for="character-name">Nome do Personagem</label>
+                            <input type="text" id="character-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="character-player">Jogador</label>
+                            <input type="text" id="character-player" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="character-class">Classe</label>
+                            <input type="text" id="character-class" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="character-level">Nível</label>
+                            <input type="number" id="character-level" min="1" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="character-race">Raça</label>
+                            <input type="text" id="character-race">
+                        </div>
+                        <div class="form-group">
+                            <label for="character-background">História</label>
+                            <textarea id="character-background" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Salvar</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="sessoes">
+            <h2>Sessões</h2>
+            <button id="new-session-btn" class="btn-primary">Nova Sessão</button>
+            <div id="sessions-list" class="grid-container"></div>
+
+            <div id="session-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('session-modal')">&times;</span>
+                    <h3 id="session-modal-title">Nova Sessão</h3>
+                    <form id="session-form">
+                        <input type="hidden" id="session-id">
+                        <div class="form-group">
+                            <label for="session-title">Título</label>
+                            <input type="text" id="session-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="session-campaign">Campanha</label>
+                            <select id="session-campaign" required>
+                                <option value="">Selecione uma campanha</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="session-date">Data e Hora</label>
+                            <input type="datetime-local" id="session-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="session-location">Local (presencial ou online)</label>
+                            <input type="text" id="session-location">
+                        </div>
+                        <div class="form-group">
+                            <label for="session-notes">Notas/Resumo</label>
+                            <textarea id="session-notes" rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Agendar</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="config">
+            <h2>Configurações</h2>
+            <form id="settings-form">
+                <div class="form-group">
+                    <label for="theme">Tema</label>
+                    <select id="theme">
+                        <option value="light">Claro</option>
+                        <option value="dark">Escuro</option>
+                        <option value="medieval">Medieval</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary">Salvar Configurações</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; RPG Campaign-Manager</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
